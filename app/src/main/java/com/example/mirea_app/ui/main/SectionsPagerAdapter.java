@@ -30,9 +30,9 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         switch (position)
         {
             case 0:
-                break;
+                return NewsListFragment.newInstance();
             case 1:
-                break;
+                return PlaceholderFragment.newInstance(position + 1);
         }
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
