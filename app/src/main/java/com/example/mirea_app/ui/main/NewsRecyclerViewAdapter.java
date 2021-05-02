@@ -6,6 +6,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,18 +15,17 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerViewAdapter.ViewHolder> {
 
     private List<NewsListItem> mValues;
     private Context context;
+    private ViewHolder openedNews = null;
+    private RecyclerView recyclerView;
 
 
-    public NewsRecyclerViewAdapter(List<NewsListItem> items) {
+    public NewsRecyclerViewAdapter(List<NewsListItem> items, RecyclerView recyclerView) {
         mValues = items;
+        this.recyclerView = recyclerView;
     }
 
     @Override
@@ -40,6 +40,9 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
         holder.mItem = mValues.get(position);
         holder.mHeadView.setText(mValues.get(position).getHead());
         holder.mBodyView.setText(mValues.get(position).getBody());
+
+        holder.adapter = this;
+
         Picasso.get().load(mValues.get(position).getUrl()).into(holder.mImage);
     }
 
@@ -55,12 +58,36 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
         public final ImageView mImage;
         public NewsListItem mItem;
 
+        public NewsRecyclerViewAdapter adapter;
+
         public ViewHolder(View view) {
             super(view);
             mView = view;
             mHeadView = (TextView) view.findViewById(R.id.news_head);
             mBodyView = (TextView) view.findViewById(R.id.news_body);
             mImage = (ImageView) view.findViewById(R.id.news_image);
+            view.findViewById(R.id.news_item_root).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (openedNews != null){
+                        if (openedNews == ViewHolder.this){
+                            mBodyView.setMaxLines(0);
+                            ViewHolder.this.adapter.recyclerView.scrollToPosition(ViewHolder.this.getAdapterPosition());
+                            openedNews = null;
+                        }
+                        else {
+                            mBodyView.setMaxLines(1000);
+                            openedNews.mBodyView.setMaxLines(0);
+                            openedNews = ViewHolder.this;
+                            openedNews.adapter.recyclerView.scrollToPosition(openedNews.getAdapterPosition());
+                        }
+                        return;
+                    }
+                    mBodyView.setMaxLines(1000);
+                    openedNews = ViewHolder.this;
+                    openedNews.adapter.recyclerView.scrollToPosition(openedNews.getAdapterPosition());
+                }
+            });
         }
 
 //        @Override
