@@ -1,4 +1,5 @@
 <resources>
+    <string name="app_name">Приложуха</string>
     <string name="tab_text_1">Новости</string>
     <string name="tab_text_2">Турниры</string>
     <string name="tab_text_3">Буткемп</string>

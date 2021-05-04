@@ -1,6 +1,7 @@
 package com.example.mirea_app.ui.main;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
@@ -30,9 +31,11 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         switch (position)
         {
             case 0:
+                Log.d("DIM", "ret f1");
                 return NewsFragment.newInstance();
             case 1:
-                return PlaceholderFragment.newInstance(position + 1);
+                Log.d("DIM", "ret f2");
+                return GamesTournamentFragment.newInstance();
             default:
                 return PlaceholderFragment.newInstance(position + 1);
         }
