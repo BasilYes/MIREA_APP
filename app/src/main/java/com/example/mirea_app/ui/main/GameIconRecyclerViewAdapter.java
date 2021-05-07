@@ -16,9 +16,11 @@ import java.util.List;
 public class GameIconRecyclerViewAdapter extends RecyclerView.Adapter<GameIconRecyclerViewAdapter.ViewHolder> {
 
     private final List<GameIconInfo> mValues;
+    GamesTournamentFragment ownFragment;
 
-    public GameIconRecyclerViewAdapter(List<GameIconInfo> items) {
+    public GameIconRecyclerViewAdapter(List<GameIconInfo> items, GamesTournamentFragment ownFragment) {
         mValues = items;
+        this.ownFragment = ownFragment;
     }
 
     @Override
@@ -30,14 +32,13 @@ public class GameIconRecyclerViewAdapter extends RecyclerView.Adapter<GameIconRe
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        Log.d("DIM", "???");
-        Picasso.get().load(mValues.get(position).getUrl()).into(holder.mImage);
+        holder.mItem = mValues.get(position % mValues.size());
+        Picasso.get().load(mValues.get(position % mValues.size()).getUrl()).into(holder.mImage);
     }
 
     @Override
     public int getItemCount() {
-        return mValues.size()/* * 2*/;
+        return mValues.size() * 3;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -49,6 +50,12 @@ public class GameIconRecyclerViewAdapter extends RecyclerView.Adapter<GameIconRe
             super(view);
             mView = view;
             mImage = (ImageView) view.findViewById(R.id.imageView);
+            mImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ownFragment.onClickItem(mItem);
+                }
+            });
         }
     }
      public int getListSize(){

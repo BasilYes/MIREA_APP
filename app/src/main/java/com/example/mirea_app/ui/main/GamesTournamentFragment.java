@@ -3,12 +3,14 @@ package com.example.mirea_app.ui.main;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -43,26 +45,26 @@ public class GamesTournamentFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_tournament_games, container, false);
 
         // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = view.findViewById(R.id.games_list);
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext()/*, LinearLayoutManager.HORIZONTAL, false*/);
-            GameIconRecyclerViewAdapter gameIconRecyclerViewAdapter = new GameIconRecyclerViewAdapter(getNewsList());
-            Log.d("DIM", "pre attach");
-            recyclerView.setLayoutManager(linearLayoutManager);
-            recyclerView.setAdapter(gameIconRecyclerViewAdapter);
-            Log.d("DIM", "post attach");
-//            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//                @Override
-//                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                    super.onScrolled(recyclerView, dx, dy);
-//                    int firstItemVisible = linearLayoutManager.findFirstVisibleItemPosition();
-//                    if (firstItemVisible != 0 && firstItemVisible % gameIconRecyclerViewAdapter.getListSize() == 0) {
-//                        recyclerView.getLayoutManager().scrollToPosition(0);
-//                    }
-//                }
-//            });
-        }
+        Context context = view.getContext();
+        RecyclerView recyclerView = view.findViewById(R.id.games_list);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        GameIconRecyclerViewAdapter gameIconRecyclerViewAdapter = new GameIconRecyclerViewAdapter(getNewsList(), this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(gameIconRecyclerViewAdapter);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int firstItemVisible = linearLayoutManager.findFirstVisibleItemPosition();
+                int lastItemVisible = linearLayoutManager.findLastVisibleItemPosition();
+                if (firstItemVisible >= gameIconRecyclerViewAdapter.getListSize()*2)
+                    recyclerView.getLayoutManager().scrollToPosition(gameIconRecyclerViewAdapter.getListSize());
+                else if (lastItemVisible <= gameIconRecyclerViewAdapter.getListSize())
+                    recyclerView.getLayoutManager().scrollToPosition(gameIconRecyclerViewAdapter.getListSize()*2);
+            }
+        });
+
+        recyclerView.getLayoutManager().scrollToPosition(gameIconRecyclerViewAdapter.getListSize());
         return view;
     }
 
@@ -77,10 +79,24 @@ public class GamesTournamentFragment extends Fragment {
                 , "https://images-ext-1.discordapp.net/external/04qHa3s5G0qRXZGgir4rEp4KJlzMtKXc6EldR8kpcXs/https/img.icons8.com/fluent-systems-filled/452/rainbow-six-siege.png"
                 , "https://images-ext-1.discordapp.net/external/TRaR-RIIuL11t5VcagRajRYqoLLi3_V_6855nPYUQ1Y/https/yandex-images.clstorage.net/WD4Q9K198/2cd1d0qeQZvK/zblviICdxupKQRuD2Xxy1pJxsmVzM8XT18DLA0vu2bD8u2eAjbBiNLIYrEZtQDdljnDFDiEcYrK82wY_eiDPnv1d-12EjfKfXmUMlllow1I3ARdgR_cwc6PxK1Yqjw1A-R3ihIy0pzFXDhxGPdHFlyxBIn2GaiUVq8yCKg_gmpp8_LorYgnVGBhzXxGbTzRH8qPjVnJ3dwDXJtuSaroqA68aVXK-5uYzND854ctE5DRcE4N-xCt3patu0CgMEunZqN-5uhB9x7qJUB_SSG0Vd1Nx8nUyZrRyJQVZAluJmQO-eBWj_qeHoaRM69J6JFcEnHHS7tXLVtUoDIL4D1DKetrP2lpjnNboaiJvMGtddyQzYPNHgaUH0eZXqvErCokjPTj10D22BRFGb3mCCGWGlVwxcg5lmWSXS40xyk3Cucja7RlYEy62mttSzZO6PmZHUwBi9CGWdHCFJUgxeMtKM91Jt6LMBAcxJTyYA_vkVWZe87JO9hnk5Mn80JtOUenJWu3KKEDc51i6ML5CW1zW1WKgAFRx1nVB9cdacinq2RMvGTaAbRQXsXXfKXJZV9SE7IJBLlQ556bqzCNaX0K4G5jMuFowjkb5K0NOYKlPVTXggbJ0sOeFo3TlmOHJONpyvmn1Y96kNFKkXShgCaZHJl1gY23mqCbE6ZxxiL1Dm9t5f-h5ox82uBlRrBOLbmbHg0MilqLVZXN2tSnBO8rKwa1qZkFM1tWTxD24Q8mU1VQeM9MfF8hnt1lN45hMI4gpm1zpmGB9B3nacJxxew51JmNhEYSj5nRj9xVLQ_kKqlLuOBUAn-SFQ-Z8yFM5tbZ0jtGzXjQolNS5bXDKPFJ661lNG4ri_7fZegB-Ykq_VWSDAZAFAFd0kfWnmcJqizjxnvmncR9Xp9Ekz_mCOdQXN1yx8wxVCjT1CazRCu5ia7uK__oaIb8FiwtBjfJYP-S0Q0BBRbKGtHMEVHhhQ?width=676&height=676"
         };
+        String types[] =
+                {
+                        "mirea"
+                        , "HS"
+                        , "CSGO"
+                        , "DOTA"
+                        , "LOL"
+                        , "R6"
+                        , "VALORANT"
+                };
         List<GameIconInfo> ITEMS = new ArrayList<GameIconInfo>();
         for(int i=0;i<urls.length;i++) {
-            ITEMS.add(new GameIconInfo(urls[i]));
+            ITEMS.add(new GameIconInfo(urls[i], types[i]));
         }
         return ITEMS;
+    }
+
+    public void onClickItem(GameIconInfo itemInfo){
+        
     }
 }
