@@ -13,19 +13,17 @@ import android.view.ViewGroup;
 
 import com.example.mirea_app.R;
 
-/**
- * A fragment representing a list of Items.
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameInfoListFragment extends Fragment {
 
-    private String gameType;
+    private String gameType = "null";
 
 
     public GameInfoListFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
     public static GameInfoListFragment newInstance(String gameType) {
         GameInfoListFragment fragment = new GameInfoListFragment();
         Bundle args = new Bundle();
@@ -46,15 +44,27 @@ public class GameInfoListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_game_info_list_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_game_info_list, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(new GameInfoRecyclerViewAdapter(DummyContent.ITEMS));
+            recyclerView.setAdapter(new GameInfoRecyclerViewAdapter(getInfo()));
         }
         return view;
+    }
+
+    List<GameInfoListItem> getInfo(){
+
+        List<GameInfoListItem> out = new ArrayList<>();
+        if (!gameType.equals("null")){
+            out.add(new GameInfoListItem(gameType + ":"));
+            out.add(new GameInfoListItem("Тут какой-то контент (стримы, повторы и т.п.) в виде кликабельных строчек"));
+            return out;
+        }
+        out.add(new GameInfoListItem("Выбери игру которая интересует"));
+        return out;
     }
 }

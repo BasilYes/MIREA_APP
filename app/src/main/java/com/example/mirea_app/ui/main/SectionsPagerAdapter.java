@@ -31,11 +31,11 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         switch (position)
         {
             case 0:
-                Log.d("DIM", "ret f1");
                 return NewsFragment.newInstance();
             case 1:
-                Log.d("DIM", "ret f2");
                 return GamesTournamentFragment.newInstance();
+            case 2:
+                return ComputerGridFragment.newInstance();
             default:
                 return PlaceholderFragment.newInstance(position + 1);
         }

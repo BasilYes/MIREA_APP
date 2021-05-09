@@ -4,6 +4,17 @@
     <string name="tab_text_2">Турниры</string>
     <string name="tab_text_3">Буткемп</string>
     <string name="tab_text_4">Профиль</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="date_select">Выбрать дату</string>
+    <string name="time_select">Выбрать время</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="get_time">время бронирования:</string>
+    <string name="no_selected_date">дата не выбрана</string>
+    <string name="no_selected_time">время не выбрано</string>
+    <string name="no_selected_comp">комп не выбран</string>
+    <string name="selected_comp">компьютер №</string>
+    <string-array name="time_spinner">
+        <item>один час</item>
+        <item>полтора часа</item>
+        <item>два часа</item>
+    </string-array>
 </resources>

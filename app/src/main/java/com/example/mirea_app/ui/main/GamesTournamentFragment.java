@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.example.mirea_app.R;
 
@@ -24,6 +26,7 @@ import java.util.List;
  */
 public class GamesTournamentFragment extends Fragment {
 
+    FrameLayout frameLayout;
     public GamesTournamentFragment() {
     }
 
@@ -42,8 +45,14 @@ public class GamesTournamentFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_tournament_games, container, false);
 
+        FragmentTransaction transaction;
+        transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.info_list_frame, GameInfoListFragment.newInstance("null"));
+        transaction.commit();
+
+        View view = inflater.inflate(R.layout.fragment_tournament_games, container, false);
+        frameLayout = view.findViewById(R.id.info_list_frame);
         // Set the adapter
         Context context = view.getContext();
         RecyclerView recyclerView = view.findViewById(R.id.games_list);
@@ -97,6 +106,11 @@ public class GamesTournamentFragment extends Fragment {
     }
 
     public void onClickItem(GameIconInfo itemInfo){
-        
+        if (getFragmentManager() != null) {
+            FragmentTransaction transaction;
+            transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.info_list_frame, GameInfoListFragment.newInstance(itemInfo.getType()));
+            transaction.commit();
+        }
     }
 }
