@@ -85,4 +85,10 @@
         android:layout_marginRight="2dp"
         android:layout_weight="2"
         tools:listitem="@layout/fragment_computer" />
+
+    <Button
+        android:id="@+id/finish_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/finish_button_text" />
 </LinearLayout>

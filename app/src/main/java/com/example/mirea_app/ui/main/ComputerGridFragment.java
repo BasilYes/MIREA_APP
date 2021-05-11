@@ -1,8 +1,10 @@
 package com.example.mirea_app.ui.main;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -18,7 +20,6 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.example.mirea_app.R;
 
@@ -32,6 +33,9 @@ public class ComputerGridFragment extends Fragment {
     TextView timeTextView;
     TextView dateTextView;
     Calendar dateAndTime= Calendar.getInstance();
+    int time;
+    AlertDialog.Builder builder;
+    AlertDialog dialog;
 
     public ComputerGridFragment() {
     }
@@ -70,6 +74,50 @@ public class ComputerGridFragment extends Fragment {
             }
         });
 
+        builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(R.string.dialog_title);
+        builder.setNegativeButton(R.string.dialog_no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialog.dismiss();
+            }
+        });
+        builder.setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialog.dismiss();
+            }
+        });
+        dialog = builder.create();
+
+
+        view.findViewById(R.id.finish_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String res =
+                        DateUtils.formatDateTime(getActivity(),
+                                dateAndTime.getTimeInMillis(),
+                                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR)
+                                + " "
+                        + DateUtils.formatDateTime(getActivity(),
+                        dateAndTime.getTimeInMillis(),
+                        DateUtils.FORMAT_SHOW_TIME);
+                switch (time){
+                    case 0:
+                        res += " на час";
+                        break;
+                    case 1:
+                        res += " на полтора часа";
+                        break;
+                    case 2:
+                        res += " на два часа";
+                        break;
+                }
+                dialog.setMessage(res);
+                dialog.show();
+            }
+        });
+
         Spinner spinner = view.findViewById(R.id.time_spinner);
         spinner.setSelection(0);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -77,7 +125,8 @@ public class ComputerGridFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
                 // показываем позиция нажатого элемента
-                Toast.makeText(getContext(), "Position = " + position, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "Position = " + position, Toast.LENGTH_SHORT).show();
+                time = position;
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {

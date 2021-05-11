@@ -1,4 +1,4 @@
-package com.example.mirea_app.ui.main;
+package com.example.mirea_app;
 
 import android.content.Context;
 import android.util.Log;
@@ -10,6 +10,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.mirea_app.R;
+import com.example.mirea_app.ui.login.LoginFragment;
+import com.example.mirea_app.ui.main.ComputerGridFragment;
+import com.example.mirea_app.ui.main.GamesTournamentFragment;
+import com.example.mirea_app.ui.main.NewsFragment;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -37,7 +41,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
             case 2:
                 return ComputerGridFragment.newInstance();
             default:
-                return PlaceholderFragment.newInstance(position + 1);
+                return LoginFragment.newInstance();
         }
     }
 
