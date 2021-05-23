@@ -1,7 +1,6 @@
 package com.example.mirea_app;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
@@ -9,8 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.mirea_app.R;
-import com.example.mirea_app.ui.login.LoginFragment;
+import com.example.mirea_app.ui.main.LoginFragment;
 import com.example.mirea_app.ui.main.ComputerGridFragment;
 import com.example.mirea_app.ui.main.GamesTournamentFragment;
 import com.example.mirea_app.ui.main.NewsFragment;

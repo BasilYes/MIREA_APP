@@ -62,6 +62,12 @@ public class NewsFragment extends Fragment {
 
     public List<NewsListItem> getNewsList() {
         List<NewsListItem> ITEMS = new ArrayList<NewsListItem>();
+        String a[] = {"https://sun9-7.userapi.com/impg/XREjhmFxGbydrcjFBEamQtz03QLGVAMJaJ2E8g/jWvP89NnifA.jpg?size=1280x603&quality=96&sign=16cb6ba1e5b2918ba12aee10c03d245a&type=album"
+                ,"https://sun9-14.userapi.com/impg/_Rj9XH2Zw2BiaGqZwJsna02gjVvIzy-kuLG9mw/WFRNFrBTJ0s.jpg?size=2560x1206&quality=96&sign=ec027a050e94d99e22dedb9b9dff178b&type=album"
+                ,"https://sun9-5.userapi.com/impg/6YSD8byzJFPWbY2VePTiO8okjn0uaJ7K9D5Vcw/KasnVDMBSDg.jpg?size=2560x1206&quality=96&sign=14019d8212232504b9b93370bf6a1fe7&type=album"
+                ,"https://sun9-7.userapi.com/impg/tx-vgVWmbPKVXG62LQX9HjA91NLyp8L3Ago_VA/9mUdGr1AOuE.jpg?size=1600x753&quality=96&sign=07dca422ff91c46c76cf083a0a7840a2&type=album"
+                ,"https://sun9-38.userapi.com/impg/z4BesqRxF2sZzP3imXkOS0zfRcJBPXOE68SA_A/rLEqFUrBFyQ.jpg?size=2560x1206&quality=96&sign=05ff5a76cc3365b801b0824038fecb82&type=album"
+                ,"https://sun9-62.userapi.com/impg/6wBUkx6fQ8vh-lobIltDoc2PaJWsiSd3j2ciNQ/kXjREUY9Lrk.jpg?size=1600x753&quality=96&sign=75ebb6103fb00e5b83e8a1d441181124&type=album"};
         for(int i=0;i<15;i++) {
 
             ITEMS.add(new NewsListItem(
@@ -96,7 +102,7 @@ public class NewsFragment extends Fragment {
                     "• Marvel's Avengers — 799 руб. (-60%) - vk.cc/amno0h\n" +
                     "• DEATH STRANDING — 1399 руб. (-60%) - vk.cc/c0dGHd\n" +
                     "• Rising Storm 2: Vietnam — 199 руб. (-75%) - vk.cc/845G6V"
-                    , "https://sun9-7.userapi.com/impg/XREjhmFxGbydrcjFBEamQtz03QLGVAMJaJ2E8g/jWvP89NnifA.jpg?size=1280x603&quality=96&sign=16cb6ba1e5b2918ba12aee10c03d245a&type=album"));
+                    , a[i%a.length]));
         }
         return ITEMS;
     }

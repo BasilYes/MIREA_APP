@@ -17,7 +17,10 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.example.mirea_app.R;
+import com.example.mirea_app.data.MySharedPreferences;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +51,7 @@ public class GamesTournamentFragment extends Fragment {
 
         FragmentTransaction transaction;
         transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.info_list_frame, GameInfoListFragment.newInstance("null"));
+        transaction.replace(R.id.info_list_frame, GameInfoListFragment.newInstance(MySharedPreferences.getInstance(getContext()).getString(MySharedPreferences.GAME_KEY, "")));
         transaction.commit();
 
         View view = inflater.inflate(R.layout.fragment_tournament_games, container, false);
@@ -109,6 +112,7 @@ public class GamesTournamentFragment extends Fragment {
         if (getFragmentManager() != null) {
             FragmentTransaction transaction;
             transaction = getFragmentManager().beginTransaction();
+            MySharedPreferences.getInstance(getContext()).putString(MySharedPreferences.GAME_KEY, itemInfo.getType());
             transaction.replace(R.id.info_list_frame, GameInfoListFragment.newInstance(itemInfo.getType()));
             transaction.commit();
         }
